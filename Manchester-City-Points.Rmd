@@ -1,0 +1,29 @@
+---
+title: "Manchester-City-Points"
+author: "Stefan Gouyet"
+date: "February 20, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readxl)
+library(reshape2)
+library(ggplot2)
+library(dplyr)
+
+setwd("~/Desktop/Current Blogs/Soccer Blog/Old/Manchester City")
+city_points <- read_excel("Manchester City Form 2010-2017.xlsx")
+
+#cumulative points
+city_points$GameNumber <- c(1:38)
+
+city_points_melted <- melt(city_points, measure.vars = c("2010/2011Cumulative","2011/2012Cumulative",
+                                                  "2012/2013Cumulative", "2013/2014Cumulative",
+                                                  "2014/2015Cumulative", "2015/2016Cumulative",
+                                                  "2016/2017Cumulative","2017/2018Cumulative"))
+
+cumulative_plot <- ggplot()+geom_line(data=city_points_melted, aes(x = `GameNumber`, y = value,                                                                    color = variable))
+
+```
